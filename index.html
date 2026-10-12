@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Histogram Quest | ภารกิจพิชิตฮิสโทแกรม</title>
+<style>
+:root{--pink:#d9a52e;--pink2:#fff0bf;--blue:#2676df;--ink:#102b5c;--cream:#f6f9ff;--mint:#c9e8ff;--gold:#f5c34d}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,"Noto Sans Thai",sans-serif;color:var(--ink);background:radial-gradient(circle at 12% 8%,#d6e9ff 0,transparent 26%),radial-gradient(circle at 88% 24%,#ffe9a8 0,transparent 22%),linear-gradient(135deg,#edf5ff,#182642 52%,#e4eeff);min-height:100vh}
+header{padding:24px 18px 18px;text-align:center;position:relative;min-height:154px;border-bottom:3px solid #e7bd49;background:linear-gradient(120deg,#ffffffeb,#eaf3ffeb 48%,#fff6d9eb)}header .school-logo{position:relative;display:block;left:auto;top:auto;width:clamp(150px,18vw,205px);height:auto;margin:4px auto 14px;object-fit:contain;background:linear-gradient(145deg,#ffffff,#fff4c8);border:4px solid #e5b52e;border-radius:28px;padding:9px;box-shadow:0 10px 28px #082b6540,0 0 0 7px #ffffffb8,0 0 0 11px #eac34c55}header .eyebrow{display:inline-block;background:linear-gradient(135deg,#164a98,#0b2860);padding:7px 14px;border-radius:99px;color:#ffdf77;border:1px solid #f2ce62;font-size:.9rem;font-weight:bold;box-shadow:0 5px 18px #df8bb52a}h1{margin:12px 0 4px;font-size:clamp(1.8rem,4vw,3rem)}header p{margin:0;color:#716780}
+main{max-width:1200px;margin:auto;padding:0 16px 36px;display:grid;grid-template-columns:330px 1fr;gap:18px}.panel{background:#111f39;border:1px solid #fff;border-radius:22px;padding:20px;box-shadow:0 12px 35px #7d6a9b18}.panel h2{margin:0 0 14px;font-size:1.2rem}.control{margin:15px 0}.control label{display:flex;justify-content:space-between;gap:10px;font-weight:bold;font-size:.94rem;margin-bottom:7px}.control small{display:block;color:#80758e;margin-top:5px}select,input[type=range]{width:100%}select{border:1px solid #e6d9eb;border-radius:12px;padding:11px;background:#fff;color:var(--ink);font:inherit}input[type=range]{accent-color:var(--pink)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.stat{background:#fff;border:1px solid #f4e7f1;border-radius:16px;padding:12px;text-align:center}.stat span{display:block;color:#8a7b94;font-size:.8rem}.stat strong{font-size:1.25rem}.game-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.pill{border-radius:99px;background:#fce7f1;padding:7px 11px;font-size:.85rem;font-weight:bold}.chart-wrap{background:linear-gradient(135deg,#fff,#f7f8ff);border:1px solid #eee6f5;border-radius:18px;padding:12px;margin:12px 0}.chart-wrap svg{display:block;width:100%;height:auto;max-height:300px}.legend{font-size:.88rem;color:#786c88}.question{font-size:1.12rem;line-height:1.65;font-weight:bold;margin:16px 0}.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.answer{border:2px solid #eadfed;border-radius:14px;padding:13px;background:#fff;color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:.18s}.answer:hover{border-color:var(--pink);transform:translateY(-2px)}.answer:disabled{cursor:default;opacity:.85}.answer.correct{border-color:#39b98a;background:#e9fff6}.answer.wrong{border-color:#ee7392;background:#fff0f4}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:13px;padding:11px 15px;font:inherit;font-weight:bold;cursor:pointer;background:var(--pink);color:white;box-shadow:0 5px 0 #d94f8d}.btn.secondary{background:#8ba4ff;box-shadow:0 5px 0 #687fda}.btn.soft{background:#fff;color:#9d4c7b;border:1px solid #f0c7dc;box-shadow:none}.btn:disabled{opacity:.5;cursor:not-allowed}.feedback{min-height:48px;margin-top:13px;padding:11px 13px;border-radius:13px;background:#f8f3ff;color:#665477;line-height:1.5}.progress{height:9px;border-radius:99px;background:#eee7f3;overflow:hidden;margin:8px 0 14px}.progress div{height:100%;background:linear-gradient(90deg,var(--pink),var(--blue));width:0;transition:width .3s}.below{margin-top:18px}.below h2{margin-top:0}.lesson{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.lesson article{padding:13px;background:#fff7fb;border-radius:14px;border:1px solid #f7dfec;line-height:1.5}.lesson b{color:#bd4e83}.badge{display:inline-block;padding:6px 9px;background:#fff0c9;border-radius:99px;margin:4px;font-size:.84rem}.muted{color:#80758e;font-size:.9rem}.exercise-editor{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.exercise-editor input,.exercise-editor textarea,.exercise-editor select{width:100%;border:1px solid #e6d9eb;border-radius:11px;padding:10px;font:inherit;background:#fff;color:var(--ink)}.exercise-editor .full{grid-column:1/-1}.saved-exercise{background:#fff7fb;border:1px solid #f4dbea;border-radius:12px;padding:10px;margin:8px 0}.hidden{display:none!important}footer{text-align:center;padding:0 12px 25px;color:#8d8197;font-size:.85rem}
+@media(max-width:850px){header{padding-top:94px}.school-logo{left:14px!important;top:12px!important;width:64px!important}main{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.lesson{grid-template-columns:1fr}.answers{grid-template-columns:1fr}.panel{padding:16px}}
+
+.school-name{display:block;color:#103b7d;font-weight:900;font-size:clamp(1rem,2.2vw,1.35rem);line-height:1.5;margin:0 auto 12px;padding:0 12px;max-width:900px;text-align:center;text-shadow:0 1px 0 #fff}.school-name span{display:block;color:#a87909;font-size:.9em;letter-spacing:.04em}
+body:before{content:"∑   π   √   ∫   x²   △   %";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.07;color:#124a9b;font-size:clamp(2rem,5vw,5rem);font-weight:900;letter-spacing:1.1rem;line-height:2.1;word-spacing:1.5rem;transform:rotate(-8deg)}
+.panel{border:1px solid #d7e5fb;box-shadow:0 12px 35px #143b7220}.stat{border-color:#d8e5fa;background:linear-gradient(145deg,#fff,#f1f6ff)}
+.pill{background:#fff0bd;color:#17417e;border:1px solid #e8c65b}.chart-wrap{background:linear-gradient(135deg,#fff,#f0f6ff);border-color:#d7e4fa}
+.answer{border-color:#cbdaf0}.answer:hover{border-color:#d7a82d}.answer.correct{border-color:#1eaa79;background:#e8fff5}.answer.wrong{border-color:#d95e67;background:#fff0f0}
+.btn{background:linear-gradient(135deg,#f8d56a,#e6ad2a);color:#102e63;box-shadow:0 5px 0 #b88417}.btn.secondary{background:linear-gradient(135deg,#4e9cff,#1d63c7);color:white;box-shadow:0 5px 0 #174a9c}
+.btn.soft{background:#f5f8ff;color:#17417e;border:1px solid #c9d9f1;box-shadow:none}.feedback{background:#edf4ff;color:#193b72}
+.progress{background:#dfe9f8}.progress div{background:linear-gradient(90deg,#236dd0,#f3c74f)}.lesson article,.saved-exercise{background:#f5f8ff;border-color:#d6e4fa}.badge{background:#fff0bf;color:#7b5700}
+.stat span,.muted,.legend{color:#687b9a}
+@media(max-width:850px){header{padding-top:22px}.school-logo{width:clamp(104px,25vw,142px)!important;margin:0 auto 10px!important}.school-name{padding:0 8px;text-align:center;font-size:.95rem}}
+
+
+/* Extra vivid blue-gold celebration styling */
+header{background:linear-gradient(125deg,#e9f4ff 0%,#ffffff 32%,#fff0b8 67%,#d9eaff 100%);border-bottom:4px solid transparent;border-image:linear-gradient(90deg,#1d5db8,#f5c447,#1d5db8) 1}
+h1{background:linear-gradient(90deg,#0b3479,#257ee7 48%,#bd850a 78%,#f1bd32);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 0 #ffffff80}
+.panel{background:linear-gradient(145deg,#fffffffa,#f0f6fffa);border:1px solid #d7e5fb}
+.panel h2{color:#15458e}
+.stat strong{color:#16488f}
+.chart-wrap{box-shadow:inset 0 0 0 2px #fff,0 7px 20px #194b8c12}
+.btn{background:linear-gradient(135deg,#ffe58b 0%,#f5c544 45%,#dca21d 100%);border:1px solid #ffeb9b}
+.btn.secondary{background:linear-gradient(135deg,#56adff,#1e63ce 72%,#164995)}
+.badge{border:1px solid #e7bd49;box-shadow:0 2px 7px #c69a2c20}
+body:after{content:"✦  ∑  π  △  √  ∫  ✧";position:fixed;right:1%;bottom:2%;pointer-events:none;z-index:-1;color:#d8a82f;opacity:.12;font-size:clamp(1.5rem,4vw,3.5rem);font-weight:bold;letter-spacing:.6rem}
+
+
+/* V3: enhanced centered school crest and vivid mathematics atmosphere */
+header{padding:26px 18px 22px;min-height:0;background:
+ radial-gradient(circle at 12% 22%,#8ec5ff70 0 3px,transparent 4px),
+ radial-gradient(circle at 85% 26%,#f5c54488 0 4px,transparent 5px),
+ linear-gradient(125deg,#dceeff 0%,#ffffff 28%,#fff0b8 58%,#e1edff 100%);
+ border-bottom:5px solid transparent;border-image:linear-gradient(90deg,#174a98,#f4c343,#174a98) 1}
+header:after{content:"∑   π   √   ∫   x²   △   %";display:block;margin:10px auto 0;color:#174a98;opacity:.45;font-size:clamp(1rem,2vw,1.5rem);font-weight:900;letter-spacing:.45rem}
+h1{filter:drop-shadow(0 3px 0 #e4bd48)}
+body{background:
+ radial-gradient(circle at 0% 0%,#9fcaff80,transparent 25%),
+ radial-gradient(circle at 100% 10%,#ffe18a80,transparent 23%),
+ radial-gradient(circle at 90% 90%,#8cbaff55,transparent 25%),
+ linear-gradient(135deg,#eaf4ff,#fff8e3 50%,#e3edff)}
+.panel{border:2px solid #d5e4fb;box-shadow:0 14px 34px #123d7820, inset 0 1px 0 #fff}
+.panel h2{background:linear-gradient(90deg,#f1d58a,#2676d9);color:#fff;padding:9px 13px;border-radius:13px;box-shadow:0 4px 0 #e9bf42}
+.chart-wrap{border:2px solid #d6e3f8;box-shadow:inset 0 0 0 3px #fff,0 8px 18px #16488d12}
+.stat{border:1px solid #e7c75c;box-shadow:0 5px 12px #183c7710}
+.badge{background:linear-gradient(135deg,#fff4c7,#f6d36c);color:#674700;border:1px solid #d9aa25}
+@media(max-width:850px){header{padding:22px 12px 18px}.school-logo{width:clamp(140px,36vw,180px)!important;margin:0 auto 12px!important}.school-name{padding:0 8px;text-align:center;font-size:1rem}}
+
+.saved-exercise{line-height:1.6}.saved-exercise input[type=radio]{accent-color:#1d63c7;flex-shrink:0}.hidden{display:none!important}#postTestPanel{margin:18px 0 0}
+
+/* Centered blue-gold game setup layout */
+main{
+  max-width:1120px;
+  margin:0 auto;
+  padding:22px 18px 40px;
+  display:grid;
+  grid-template-columns:minmax(0, 1fr);
+  justify-items:center;
+  gap:22px;
+}
+main > aside.panel{
+  width:100%;
+  max-width:900px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0 20px;
+  padding:24px 28px 22px;
+  background:linear-gradient(145deg,#ffffff 0%,#0b1730 55%,#182642 100%);
+  border:2px solid #c9a443;
+  border-radius:26px;
+  box-shadow:0 18px 42px #06112655, inset 0 1px 0 #fff;
+}
+main > aside.panel > h2,
+main > aside.panel > .actions,
+main > aside.panel > p,
+main > aside.panel > #customPanel,
+main > aside.panel > #exercisePanel{
+  grid-column:1/-1;
+}
+main > aside.panel > h2{
+  text-align:center;
+  margin:0 0 14px;
+  padding:13px 16px;
+  border-radius:16px;
+  color:#fff;
+  background:linear-gradient(110deg,#071a3b,#123d78 55%,#b58a2a);
+  border:1px solid #e0bd62;
+  box-shadow:0 5px 0 #c9a443;
+}
+main > aside.panel > .control{
+  min-width:0;
+  padding:13px 14px;
+  margin:7px 0;
+  border:1px solid #263a5b;
+  border-radius:16px;
+  background:#111f39;
+}
+main > aside.panel > .control label{
+  color:#f1d58a;
+  align-items:center;
+}
+main > aside.panel > .control small{color:#c2cde0}
+main > aside.panel select,
+main > aside.panel input:not([type=range]),
+main > aside.panel textarea{
+  border:1px solid #b99a4b!important;
+  border-radius:12px!important;
+}
+main > aside.panel input[type=range]{accent-color:#d5a51d}
+main > aside.panel > .actions{
+  justify-content:center;
+  margin:14px 0 4px;
+  padding-top:14px;
+  border-top:1px solid #314363;
+}
+main > aside.panel > p{text-align:center;margin:8px 0 0}
+main > section{width:100%;max-width:1040px;min-width:0}
+main > section > .panel{width:100%}
+main > section .stats{gap:12px}
+main > section .stat{padding:15px 10px}
+main > section .game-head h2{color:#f1d58a}
+#customPanel,#exercisePanel{min-width:0}
+#exercisePanel .exercise-editor{grid-template-columns:repeat(2,minmax(0,1fr))}
+#exercisePanel .actions{justify-content:flex-start}
+.btn{transition:transform .16s ease,filter .16s ease}
+.btn:hover{filter:brightness(1.03);transform:translateY(-1px)}
+@media(max-width:700px){
+  main{padding:14px 12px 30px;gap:16px}
+  main > aside.panel{grid-template-columns:minmax(0,1fr);padding:17px 14px}
+  main > aside.panel > h2,
+  main > aside.panel > .actions,
+  main > aside.panel > p,
+  main > aside.panel > #customPanel,
+  main > aside.panel > #exercisePanel{grid-column:1}
+  main > aside.panel > .control{padding:11px 12px}
+  #exercisePanel .exercise-editor{grid-template-columns:minmax(0,1fr)}
+  #exercisePanel .exercise-editor .full{grid-column:1}
+}
+
+
+/* Deep navy & gold finish */
+body{
+  background:
+    radial-gradient(ellipse at 50% 0%, #20365b 0%, transparent 52%),
+    linear-gradient(160deg,#071226 0%,#0b1730 48%,#101d35 100%) !important;
+  color:#edf2fb;
+}
+main > aside.panel{
+  background:linear-gradient(145deg,#101f3b 0%,#0b1730 62%,#1e2b43 100%) !important;
+  border:2px solid #c9a443 !important;
+  box-shadow:0 20px 48px #02081799,inset 0 1px 0 #ffffff12 !important;
+}
+main > aside.panel > h2{
+  color:#fff8e4 !important;
+  background:linear-gradient(110deg,#050f24 0%,#102d59 58%,#80601b 100%) !important;
+  border:1px solid #e0bd62 !important;
+  box-shadow:0 5px 0 #80601b !important;
+}
+main > aside.panel > .control{
+  background:#14233f !important;
+  border:1px solid #354766 !important;
+  color:#edf2fb !important;
+}
+main > aside.panel > .control label{color:#f0d68d !important}
+main > aside.panel > .control small{color:#c2cde0 !important}
+main > aside.panel select,
+main > aside.panel input:not([type=range]),
+main > aside.panel textarea{
+  background:#09152b !important;
+  color:#f6f0df !important;
+  border:1px solid #9d8139 !important;
+}
+main > aside.panel input[type=range]{accent-color:#d5b45c}
+main > aside.panel > .actions{border-top:1px solid #344663 !important}
+main > section .panel{
+  border-color:#c9a443;
+}
+@media(max-width:700px){
+  main > aside.panel{background:linear-gradient(145deg,#101f3b,#0b1730 70%,#1e2b43)!important}
+}
+
+
+/* High-contrast typography for readability */
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+body{
+  color:#f8fafc !important;
+  font-size:16px !important;
+  line-height:1.65 !important;
+  font-weight:500 !important;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,h5,h6{
+  color:#ffffff !important;
+  font-weight:800 !important;
+  line-height:1.3 !important;
+  letter-spacing:.01em;
+  text-shadow:none !important;
+}
+p,li,label,legend,summary,span,div{
+  text-shadow:none;
+}
+small,.small,.muted,.hint,.subtle, [class*="hint"], [class*="muted"]{
+  color:#d6deeb !important;
+  opacity:1 !important;
+}
+button,.btn,[role="button"]{
+  font-weight:750 !important;
+  letter-spacing:.01em;
+  text-shadow:none !important;
+}
+input,select,textarea{
+  color:#ffffff !important;
+  background-color:#061126 !important;
+  font-size:16px !important;
+  font-weight:600 !important;
+  border:2px solid #d2ad4c !important;
+  outline-offset:2px;
+}
+input::placeholder,textarea::placeholder{
+  color:#c0cada !important;
+  opacity:1 !important;
+}
+label{font-weight:750 !important}
+a{color:#ffdf78 !important;text-decoration-thickness:2px}
+:focus-visible{
+  outline:3px solid #ffdf78 !important;
+  outline-offset:3px !important;
+}
+main > aside.panel{
+  color:#f8fafc !important;
+}
+main > aside.panel > .control{
+  color:#f8fafc !important;
+  box-shadow:0 4px 12px #00000020;
+}
+main > aside.panel > .control label{
+  color:#ffe29a !important;
+  font-size:15px !important;
+}
+main > aside.panel > .control small{color:#e1e7f0 !important}
+main > aside.panel > h2{
+  font-size:clamp(1.25rem,2.5vw,1.65rem) !important;
+  letter-spacing:.025em;
+}
+main > section, main > section .panel{
+  color:#f8fafc !important;
+}
+main > section p, main > section label, main > section li{
+  color:#f1f5f9;
+}
+main > section .stat, main > section .card, main > section .question{
+  color:#f8fafc;
+}
+table th, table td{color:#f8fafc}
+@media(max-width:700px){
+  body{font-size:16px !important;line-height:1.6 !important}
+  button,.btn{min-height:42px}
+}
+
+
+/* Global readability pass: make all interface text consistently high-contrast */
+:root{
+  color-scheme:dark;
+  --text-primary:#FFFFFF;
+  --text-secondary:#E7EDF7;
+  --text-gold:#FFE08A;
+  --surface-dark:#08152D;
+  --surface-card:#12213C;
+  --line-gold:#D8B65A;
+}
+html,body{
+  color:#FFFFFF !important;
+  font-size:16px !important;
+  line-height:1.65 !important;
+  font-weight:500 !important;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+body *{
+  text-shadow:none !important;
+  opacity:1;
+}
+h1,h2,h3,h4,h5,h6,
+.title,.heading,.section-title,.panel-title{
+  color:#FFFFFF !important;
+  font-weight:800 !important;
+  line-height:1.35 !important;
+}
+p,li,dd,dt,blockquote,figcaption,
+label,legend,summary,caption,
+.stat,.stat *, .badge,.chip,.tag,
+.question,.question *, .option,.option *,
+.feedback,.result,.explanation,.instructions{
+  color:#F4F7FC !important;
+}
+small,small *, .muted,.muted *, .hint,.hint *,
+.subtle,.subtle *, .description,.description *,
+.helper,.helper *, [class*="hint"],[class*="muted"],[class*="subtle"]{
+  color:#DCE5F2 !important;
+  opacity:1 !important;
+}
+strong,b,th,.gold,.accent,.score,.points,.coin,.reward{
+  color:#FFE08A !important;
+  font-weight:800 !important;
+}
+a,a:visited{
+  color:#FFE08A !important;
+  font-weight:700 !important;
+  text-decoration-thickness:2px;
+}
+button,button *, .btn,.btn *, [role="button"],[role="button"] *{
+  color:#FFFFFF !important;
+  font-weight:750 !important;
+  opacity:1 !important;
+}
+input,select,textarea{
+  color:#FFFFFF !important;
+  background:#061126 !important;
+  font-size:16px !important;
+  font-weight:600 !important;
+  line-height:1.5 !important;
+  border:2px solid #D8B65A !important;
+  caret-color:#FFE08A !important;
+}
+input::placeholder,textarea::placeholder{
+  color:#CBD6E7 !important;
+  opacity:1 !important;
+}
+select option{
+  color:#FFFFFF !important;
+  background:#08152D !important;
+}
+input[type="checkbox"],input[type="radio"]{accent-color:#D8B65A}
+:focus-visible{
+  outline:3px solid #FFE08A !important;
+  outline-offset:3px !important;
+}
+hr, .divider{border-color:#3A4B68 !important}
+table,thead,tbody,tr,th,td{
+  color:#F4F7FC !important;
+  border-color:#3A4B68 !important;
+}
+main > aside.panel, main > section, main > section .panel{
+  color:#FFFFFF !important;
+}
+main > aside.panel > .control,
+main > section .panel,
+main > section .card,
+main > section .stat,
+main > section .question{
+  color:#FFFFFF !important;
+  background-color:#12213C;
+  border-color:#3A4B68;
+}
+main > aside.panel > .control label,
+main > aside.panel > h2{
+  color:#FFE08A !important;
+}
+main > aside.panel > .control small{color:#DCE5F2 !important}
+svg text{fill:currentColor}
+@media(max-width:700px){
+  html,body{font-size:16px !important;line-height:1.6 !important}
+  button,.btn{min-height:44px}
+}
+
+
+/* Black, crisp text pass: keep navy/gold surfaces, use black text on light panels */
+html,body{
+  color:#111111 !important;
+  font-family:Arial,"Noto Sans Thai",Tahoma,sans-serif !important;
+  font-weight:500 !important;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+body *{
+  text-shadow:none !important;
+}
+h1,h2,h3,h4,h5,h6,
+p,li,dd,dt,blockquote,figcaption,label,legend,summary,caption,
+.stat,.stat *, .question,.question *, .option,.option *,
+.feedback,.result,.explanation,.instructions{
+  color:#111111 !important;
+  font-weight:600;
+  opacity:1 !important;
+}
+small,small *, .muted,.muted *, .hint,.hint *, .subtle,.subtle *,
+.description,.description *, .helper,.helper *,
+[class*="hint"],[class*="muted"],[class*="subtle"]{
+  color:#262626 !important;
+  opacity:1 !important;
+}
+strong,b,th,.gold,.accent,.score,.points,.coin,.reward{
+  color:#000000 !important;
+  font-weight:800 !important;
+}
+a,a:visited{
+  color:#000000 !important;
+  font-weight:700 !important;
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+}
+button,button *, .btn,.btn *, [role="button"],[role="button"] *{
+  color:#111111 !important;
+  font-weight:750 !important;
+  text-shadow:none !important;
+  opacity:1 !important;
+}
+input,select,textarea{
+  color:#111111 !important;
+  background:#FFFFFF !important;
+  font-family:Arial,"Noto Sans Thai",Tahoma,sans-serif !important;
+  font-size:16px !important;
+  font-weight:600 !important;
+  border:2px solid #9A7620 !important;
+  caret-color:#111111 !important;
+}
+input::placeholder,textarea::placeholder{
+  color:#444444 !important;
+  opacity:1 !important;
+}
+select option{
+  color:#111111 !important;
+  background:#FFFFFF !important;
+}
+input[type="checkbox"],input[type="radio"]{accent-color:#9A7620}
+:focus-visible{
+  outline:3px solid #9A7620 !important;
+  outline-offset:3px !important;
+}
+table,thead,tbody,tr,th,td{
+  color:#111111 !important;
+  border-color:#9A7620 !important;
+}
+main > aside.panel{
+  color:#111111 !important;
+  background:linear-gradient(145deg,#FFFFFF 0%,#F7F8FA 68%,#FFF9E8 100%) !important;
+}
+main > aside.panel > h2{
+  color:#111111 !important;
+  background:linear-gradient(110deg,#E7EDF5 0%,#F6F8FB 65%,#F4E4B5 100%) !important;
+  border:2px solid #9A7620 !important;
+  box-shadow:0 4px 0 #9A7620 !important;
+}
+main > aside.panel > .control{
+  color:#111111 !important;
+  background:#FFFFFF !important;
+  border:1px solid #B8C2D0 !important;
+}
+main > aside.panel > .control label,
+main > aside.panel > .control small{
+  color:#111111 !important;
+}
+main > section, main > section .panel{
+  color:#111111 !important;
+}
+main > section .panel,
+main > section .card,
+main > section .stat,
+main > section .question{
+  background:#FFFFFF !important;
+  color:#111111 !important;
+  border-color:#B8C2D0 !important;
+}
+main > section .panel *,
+main > section .card *,
+main > section .stat *,
+main > section .question *{
+  color:#111111 !important;
+}
+svg text{fill:#111111 !important}
+
+
+/* Screen-by-screen flow: setup first, gameplay after starting */
+body:not(.game-active) main > section{display:none !important}
+body:not(.game-active) main > aside.panel{display:grid !important}
+body.game-active main > aside.panel{display:none !important}
+body.game-active main > section{display:block !important}
+body:not(.game-active) main{max-width:980px !important}
+body:not(.game-active) main > aside.panel{margin:20px auto !important}
+body.game-active main{max-width:1120px !important}
+body.game-active main > section:first-of-type{animation:pageEnter .24s ease-out}
+body.game-active #question,
+body.game-active #answers,
+body.game-active #feedback,
+body.game-active #result{animation:pageEnter .2s ease-out}
+@keyframes pageEnter{
+  from{opacity:.45;transform:translateY(7px)}
+  to{opacity:1;transform:translateY(0)}
+}
+body.game-active #nextBtn:not(:disabled){box-shadow:0 0 0 2px #9A7620}
+
+
+.lesson-summary{
+  margin:18px 0;padding:18px 20px;border:2px solid #9A7620;border-radius:16px;
+  background:#FFFDF6;color:#111111;text-align:left;line-height:1.75;
+}
+.lesson-summary h3{margin:0 0 10px;color:#111111!important;font-size:1.2rem}
+.lesson-summary ul{padding-left:22px;margin:8px 0}
+.lesson-summary li,.lesson-summary p,.lesson-summary b{color:#111111!important}
+.final-score{
+  padding:12px 16px;border:2px solid #9A7620;border-radius:12px;
+  background:#FFF4CE;color:#111111!important;font-size:1.25rem;font-weight:800;
+}
+
+</style>
+
+<style id="safe-fullscreen-results">
+#result:not(.hidden) {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: clamp(16px, 3vw, 44px) !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 18px !important;
+  background: radial-gradient(circle at 50% 10%, #263d69, #101b34 58%, #080e1d) !important;
+  color: #fff !important;
+  text-align: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+#result:not(.hidden) h1,
+#result:not(.hidden) h2 {
+  font-size: clamp(42px, 8vw, 100px) !important;
+  line-height: 1.05 !important;
+  margin: 8px 0 16px !important;
+  color: #ffd66b !important;
+  font-weight: 1000 !important;
+  text-shadow: 0 5px 0 #050b17, 0 0 28px #e9bd584d !important;
+}
+#result:not(.hidden) p {
+  font-size: clamp(20px, 3vw, 34px) !important;
+  line-height: 1.4 !important;
+  color: #fff !important;
+}
+#result:not(.hidden) .lesson-summary {
+  width: min(100%, 1050px) !important;
+  max-height: 34vh !important;
+  overflow-y: auto !important;
+  background: #fffdf5 !important;
+  color: #111 !important;
+  border: 3px solid #e9bd58 !important;
+  border-radius: 22px !important;
+  padding: clamp(16px, 2.5vw, 30px) !important;
+  font-size: clamp(16px, 1.5vw, 22px) !important;
+  text-align: left !important;
+}
+#result:not(.hidden) button {
+  font-size: clamp(18px, 2vw, 27px) !important;
+  font-weight: 900 !important;
+  padding: 15px 26px !important;
+  min-height: 58px !important;
+}
+@media (max-width: 600px) {
+  #result:not(.hidden) { padding: 14px !important; gap: 12px !important; }
+  #result:not(.hidden) .lesson-summary { max-height: 28vh !important; }
+}
+</style>
+
+
+<style id="black-clear-result-summary">
+/* High-contrast black text in score summary and lesson recap */
+#result,
+#result * {
+  color: #111111;
+}
+#result:not(.hidden) {
+  color: #111111 !important;
+}
+#result:not(.hidden) h1,
+#result:not(.hidden) h2,
+#result:not(.hidden) h3,
+#result:not(.hidden) strong,
+#result:not(.hidden) b,
+#result:not(.hidden) p,
+#result:not(.hidden) li,
+#result:not(.hidden) span,
+#result:not(.hidden) div,
+#result:not(.hidden) label {
+  color: #111111 !important;
+  text-shadow: none !important;
+}
+#result:not(.hidden) .lesson-summary,
+#result:not(.hidden) .lesson-summary *,
+#result:not(.hidden) .score-card,
+#result:not(.hidden) .score-card *,
+#result:not(.hidden) .result-stats,
+#result:not(.hidden) .result-stats *,
+#result:not(.hidden) .score-summary,
+#result:not(.hidden) .score-summary * {
+  background-color: #fffdf5 !important;
+  color: #111111 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+#result:not(.hidden) h1,
+#result:not(.hidden) h2 {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  text-shadow: none !important;
+}
+#result:not(.hidden) button {
+  color: #111111 !important;
+  background: #f4d27b !important;
+  border: 2px solid #111111 !important;
+}
+</style>
+
+
+<style id="blue-gold-score-summary-and-visible-lesson">
+/* Score summary: blue and gold theme, high-contrast black text */
+#result:not(.hidden) {
+  background: radial-gradient(circle at 15% 10%, #e4f5ff 0%, #b9e4ff 38%, #f5d77b 100%) !important;
+}
+#result:not(.hidden) .score-card,
+#result:not(.hidden) .result-stats,
+#result:not(.hidden) .score-summary {
+  background: linear-gradient(135deg, #d8f0ff 0%, #fff0b8 100%) !important;
+  color: #111 !important;
+  border: 2px solid #c79a27 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 8px 22px rgba(16, 38, 70, .14) !important;
+}
+#result:not(.hidden) .score-card *,
+#result:not(.hidden) .result-stats *,
+#result:not(.hidden) .score-summary * {
+  background: transparent !important;
+  color: #111 !important;
+  text-shadow: none !important;
+}
+/* Make the lesson recap visibly distinct and readable */
+#result:not(.hidden) .lesson-summary {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: min(100%, 1050px) !important;
+  background: linear-gradient(135deg, #e5f5ff 0%, #fff5d2 100%) !important;
+  color: #111 !important;
+  border: 3px solid #c79a27 !important;
+  border-radius: 20px !important;
+  padding: clamp(18px, 2.5vw, 32px) !important;
+  text-align: left !important;
+  font-size: clamp(16px, 1.5vw, 22px) !important;
+  line-height: 1.65 !important;
+  max-height: 36vh !important;
+  overflow-y: auto !important;
+}
+#result:not(.hidden) .lesson-summary * {
+  color: #111 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+#result:not(.hidden) .lesson-summary h2,
+#result:not(.hidden) .lesson-summary h3,
+#result:not(.hidden) .lesson-summary strong {
+  color: #111 !important;
+  font-weight: 900 !important;
+}
+</style>
+
+
+<style id="lesson-summary-scroll-fix">
+/* ให้เลื่อนอ่านสรุปบทเรียนไปพร้อมกับหน้าสรุปคะแนน ไม่เกิดแถบเลื่อนซ้อน */
+#result:not(.hidden) {
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+#result:not(.hidden) > * {
+  flex-shrink: 0 !important;
+}
+#result:not(.hidden) .lesson-summary {
+  display: block !important;
+  width: min(100%, 1050px) !important;
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+  flex-shrink: 0 !important;
+  margin: 8px auto 20px !important;
+  box-sizing: border-box !important;
+}
+#result:not(.hidden) .lesson-summary ul {
+  padding-left: 28px !important;
+}
+#result:not(.hidden) .lesson-summary li {
+  margin: 8px 0 !important;
+  line-height: 1.65 !important;
+}
+</style>
+
+</head>
+<body>
+<header><img class="school-logo" src="data:image/jpeg;base64,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EREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERB//Z" alt="ตราสัญลักษณ์โรงเรียนสารสาสน์วิเทศคลองหลวง"><div class="school-name">โรงเรียนสารสาสน์วิเทศคลองหลวง<span>SARASAS WITED KLONGLUANG</span></div><div class="eyebrow">🌸 M.2 • คณิตศาสตร์ • เล่นแล้วเข้าใจ</div><h1>🎮 Histogram Quest</h1><p>ภารกิจพิชิตฮิสโทแกรม — สร้างกราฟ อ่านข้อมูล และไขปริศนาสถิติ</p></header>
+<main>
+<aside class="panel">
+<h2>🛠️ ตั้งค่าเกมของคุณ</h2>
+<div class="control"><label for="difficulty">ระดับความยาก</label><select id="difficulty"><option value="easy">🌱 ง่าย</option><option value="medium" selected>🌷 ปานกลาง</option><option value="hard">🔥 ยาก</option><option value="pro">👑 ระดับโปร</option></select></div>
+<div class="control"><label for="questionCount">จำนวนข้อ <span id="countVal">10 ข้อ</span></label><input id="questionCount" type="range" min="5" max="20" step="5" value="10"><small>เลื่อนเพื่อเลือก 5, 10 หรือ 20 ข้อ</small></div>
+<div class="control"><label for="timeLimit">เวลาต่อข้อ <span id="timeVal">30 วินาที</span></label><input id="timeLimit" type="range" min="10" max="60" step="5" value="30"></div>
+<div class="control"><label for="lives">จำนวนชีวิต ❤️ <span id="lifeVal">5 ดวง</span></label><input id="lives" type="range" min="1" max="10" value="5"></div>
+<div class="control"><label for="dataset">ชุดข้อมูล</label><select id="dataset"><option value="scores">คะแนนสอบ</option><option value="height">ส่วนสูง (ซม.)</option><option value="books">จำนวนหนังสือที่อ่าน</option><option value="custom">✍️ สร้างชุดข้อมูลเอง</option></select></div>
+<div id="customPanel" class="control hidden">
+  <label for="customName">ชื่อชุดข้อมูล</label><input id="customName" type="text" value="ข้อมูลของฉัน" maxlength="40" style="width:100%;border:1px solid #e6d9eb;border-radius:12px;padding:10px;font:inherit">
+  <label for="customUnit" style="margin-top:10px">หน่วยข้อมูล</label><input id="customUnit" type="text" value="หน่วย" maxlength="20" style="width:100%;border:1px solid #e6d9eb;border-radius:12px;padding:10px;font:inherit">
+  <label for="customValues" style="margin-top:10px">กรอกข้อมูลตัวเลข คั่นด้วยจุลภาค</label><textarea id="customValues" rows="4" style="width:100%;border:1px solid #e6d9eb;border-radius:12px;padding:10px;font:inherit" placeholder="เช่น 12, 15, 18, 18, 22, 25, 27, 31, 33, 35">12, 15, 18, 18, 22, 25, 27, 31, 33, 35, 36, 40, 42, 44, 48</textarea>
+  <label for="customBins" style="margin-top:10px">จำนวนช่วงชั้น</label><input id="customBins" type="range" min="3" max="8" value="5"><small><span id="customBinsVal">5</span> ช่วงชั้น • กราฟจะปรับอัตโนมัติ</small>
+  <button class="btn soft" id="applyCustomBtn" style="margin-top:10px">สร้าง/อัปเดตกราฟจากข้อมูลนี้</button>
+  <small>ใส่ตัวเลขอย่างน้อย 3 ค่า ใช้จุดทศนิยมได้ ระบบจะแบ่งช่วงและนับความถี่ให้อัตโนมัติ</small>
+</div>
+<div class="control"><label for="mission">รูปแบบภารกิจ</label><select id="mission"><option value="mix">🎲 สุ่มทุกภารกิจ</option><option value="read">👀 อ่านกราฟ</option><option value="build">🧱 สร้างฮิสโทแกรม</option><option value="analyze">🧠 วิเคราะห์ข้อมูล</option><option value="myExercises">✍️ แบบฝึกหัดที่ฉันสร้าง</option></select></div>
+<div id="exercisePanel" class="control hidden">
+  <h3 style="margin:0 0 8px">✍️ สร้างแบบฝึกหัดของคุณ</h3>
+  <p class="muted">สร้างโจทย์แบบเลือกตอบ 4 ตัวเลือก แล้วนำไปเล่นในเกมได้ทันที</p>
+  <div class="exercise-editor">
+    <textarea id="exQuestion" class="full" rows="2" placeholder="พิมพ์คำถาม เช่น ช่วงใดมีความถี่สูงที่สุด?"></textarea>
+    <input id="exA" placeholder="ตัวเลือก A">
+    <input id="exB" placeholder="ตัวเลือก B">
+    <input id="exC" placeholder="ตัวเลือก C">
+    <input id="exD" placeholder="ตัวเลือก D">
+    <select id="exCorrect" class="full"><option value="0">คำตอบที่ถูก: A</option><option value="1">คำตอบที่ถูก: B</option><option value="2">คำตอบที่ถูก: C</option><option value="3">คำตอบที่ถูก: D</option></select>
+    <textarea id="exExplain" class="full" rows="2" placeholder="เฉลย/คำอธิบาย (ไม่บังคับ)"></textarea>
+  </div>
+  <div class="actions"><button class="btn soft" id="addExerciseBtn">➕ เพิ่มโจทย์</button><button class="btn soft" id="clearExercisesBtn">ล้างโจทย์ทั้งหมด</button><button class="btn soft" id="exportDataBtn">💾 ส่งออกข้อมูล</button><button class="btn soft" id="importDataBtn">📂 นำเข้าข้อมูล</button><input id="importDataFile" type="file" accept=".json,application/json" class="hidden"></div>
+  <div id="exerciseList"></div>
+  <small>เพิ่มโจทย์อย่างน้อย 1 ข้อ แล้วเลือก “แบบฝึกหัดที่ฉันสร้าง” และกดเริ่มเกม</small>
+</div>
+<div class="control"><label for="hintPower">ตัวช่วยพิเศษ <span id="hintVal">3 ครั้ง</span></label><input id="hintPower" type="range" min="0" max="5" value="3"></div>
+<div class="control"><label for="comboPower">โบนัสคอมโบ 🔥</label><select id="comboPower"><option value="on">เปิดใช้งาน</option><option value="off">ปิดใช้งาน</option></select></div>
+<div class="actions"><button class="btn" id="startBtn">เริ่มภารกิจใหม่ 🚀</button><button class="btn soft" id="resetBtn">คืนค่าเริ่มต้น</button></div>
+<p class="muted">💡 ปรับตัวแปรได้ก่อนเริ่มเกม กราฟจะเปลี่ยนตามชุดข้อมูลแบบเรียลไทม์</p>
+</aside>
+<section>
+<div class="stats">
+<div class="stat"><span>คะแนน ⭐</span><strong id="score">0</strong></div><div class="stat"><span>ชีวิต ❤️</span><strong id="heartStat">❤️❤️❤️❤️❤️</strong></div><div class="stat"><span>คอมโบ 🔥</span><strong id="combo">0</strong></div><div class="stat"><span>เวลา ⏱️</span><strong id="timer">30</strong></div>
+</div>
+<div class="panel">
+<div class="game-head"><h2 id="missionTitle">🌷 พร้อมออกเดินทางหรือยัง?</h2><span class="pill" id="questionNo">ข้อ 0 / 10</span></div>
+<div class="progress"><div id="progressBar"></div></div>
+<div class="chart-wrap"><svg id="chart" viewBox="0 0 640 290" role="img" aria-label="ฮิสโทแกรมแบบโต้ตอบ"></svg><div class="legend" id="chartCaption">เลือกชุดข้อมูล แล้วกด “เริ่มภารกิจใหม่” เพื่อเริ่มเรียนรู้</div></div>
+<div id="question" class="question">🎯 เป้าหมาย: ฝึกสร้าง อ่าน และวิเคราะห์ฮิสโทแกรมให้แม่นยำ!</div>
+<div class="answers" id="answers"></div>
+<div class="actions"><button class="btn secondary" id="hintBtn">💡 ขอคำใบ้ (<span id="hintRemain">3</span>)</button><button class="btn soft" id="cutBtn">✂️ ตัดตัวเลือก</button><button class="btn soft" id="extraBtn">⏳ เพิ่มเวลา +10 วิ</button><button class="btn" id="nextBtn" disabled>ข้อต่อไป ➜</button></div>
+<div class="feedback" id="feedback" aria-live="polite">คำแนะนำ: ฮิสโทแกรมใช้แสดงการแจกแจงความถี่ของข้อมูลเชิงปริมาณที่จัดเป็นช่วง และแท่งที่ติดกันแสดงช่วงข้อมูลต่อเนื่อง</div>
+<div id="result" class="below hidden"></div>
+</div>
+<div class="panel below"><h2>📘 จำให้ขึ้นใจ: ฮิสโทแกรมคืออะไร?</h2><div class="lesson"><article><b>1. แกนนอน (X)</b><br>แสดงช่วงชั้นของข้อมูล เช่น 10–19, 20–29</article><article><b>2. แกนตั้ง (Y)</b><br>แสดงความถี่ หรือจำนวนข้อมูลในแต่ละช่วง</article><article><b>3. แท่งติดกัน</b><br>แท่งของฮิสโทแกรมติดกัน เพราะช่วงข้อมูลต่อเนื่องกัน</article></div><p class="muted">จำไว้: ความถี่รวม = ผลบวกความถี่ทุกช่วง • แท่งสูงที่สุดคือช่วงที่มีข้อมูลมากที่สุด</p><h2>🏆 รางวัลความสำเร็จ</h2><div id="badges"><span class="badge">🔒 นักสำรวจมือใหม่</span></div></div>
+</section>
+
+<section class="panel below" id="postTestPanel">
+ <h2>📝 แบบทดสอบหลังเรียน 10 ข้อ</h2>
+ <p class="muted">ทำแบบทดสอบแยกจากเกมเพื่อประเมินความเข้าใจเรื่องการอ่านและวิเคราะห์ฮิสโทแกรม</p>
+ <div id="postTestQuestions"></div>
+ <div class="actions"><button class="btn secondary" id="gradeTestBtn">ตรวจคำตอบ</button><button class="btn soft" id="resetTestBtn">ทำใหม่</button></div>
+ <div class="feedback" id="postTestResult">เลือกคำตอบให้ครบ แล้วกด “ตรวจคำตอบ” เพื่อดูคะแนนและเฉลย</div>
+</section>
+</main>
+<footer>สร้างเพื่อการเรียนรู้คณิตศาสตร์ระดับชั้นมัธยมศึกษาปีที่ 2 • เล่นซ้ำได้เพื่อพัฒนาทักษะ</footer>
+<script>
+const $=id=>document.getElementById(id);
+const datasets={
+ scores:{name:'คะแนนสอบ',unit:'คะแนน',bins:['0–9','10–19','20–29','30–39','40–49','50–59'],freq:[2,5,8,12,7,4],values:[4,8,12,14,17,18,22,24,26,28,31,32,33,35,36,37,38,39,41,43,45,47,51,54,57,59]},
+ height:{name:'ส่วนสูง',unit:'ซม.',bins:['130–139','140–149','150–159','160–169','170–179','180–189'],freq:[2,4,9,11,6,3],values:[133,138,142,145,148,151,152,154,155,156,157,158,159,161,162,163,164,165,166,167,168,169,171,173,175,178,181,185]},
+ books:{name:'จำนวนหนังสือที่อ่าน',unit:'เล่ม',bins:['0–2','3–5','6–8','9–11','12–14','15–17'],freq:[4,7,10,6,3,2],values:[0,1,2,3,3,4,5,5,6,6,7,7,8,8,8,9,9,10,10,11,12,12,13,14,15,16]}
+};
+let state={score:0,lives:5,combo:0,index:0,total:10,time:30,remaining:30,hints:3,usedHint:false,locked:false,questions:[],current:null,interval:null,correct:0,wrong:0,answered:0};
+let customDataset = null;
+let customExerciseBank = [];
+function parseCustomDataset(){
+ const raw=$('customValues').value.trim();
+ const values=raw.split(/[;,\\s]+/).filter(Boolean).map(Number);
+ if(values.length<3 || values.some(v=>!Number.isFinite(v))) throw new Error('กรุณากรอกตัวเลขอย่างน้อย 3 ค่า โดยคั่นด้วยจุลภาคหรือเว้นวรรค');
+ const sorted=[...values].sort((a,b)=>a-b),n=Number($('customBins').value);
+ let min=sorted[0],max=sorted[sorted.length-1];
+ if(min===max){min-=0.5;max+=0.5}
+ const width=(max-min)/n, freq=Array(n).fill(0), bins=[];
+ for(let i=0;i<n;i++){
+   const lo=min+i*width, hi=(i===n-1)?max:min+(i+1)*width;
+   bins.push(`${fmt(lo)}–${fmt(hi)}`);
+ }
+ sorted.forEach(v=>{let ix=Math.floor((v-min)/width);if(ix>=n)ix=n-1;if(ix<0)ix=0;freq[ix]++});
+ return {name:$('customName').value.trim()||'ข้อมูลของฉัน',unit:$('customUnit').value.trim()||'หน่วย',bins,freq,values:sorted};
+}
+function fmt(n){return Number(n.toFixed(2)).toString()}
+function binData(){if($('dataset').value==='custom'){if(!customDataset)customDataset=parseCustomDataset();return customDataset}return datasets[$('dataset').value]}
+function drawChart(freqOverride=null,highlight=-1){
+ const d=binData(),freq=freqOverride||d.freq,svg=$('chart');let max=Math.max(...freq),w=640,h=290,left=48,right=15,top=20,bottom=55,plotW=w-left-right,plotH=h-top-bottom,barW=plotW/freq.length;
+ let s='';
+ for(let i=0;i<=4;i++){let y=top+plotH-i*plotH/4,val=Math.round(max*i/4);s+=`<line x1="${left}" y1="${y}" x2="${w-right}" y2="${y}" stroke="#e9e3f1" stroke-dasharray="4 4"/><text x="${left-10}" y="${y+4}" text-anchor="end" font-size="12" fill="#84768f">${val}</text>`}
+ s+=`<line x1="${left}" y1="${top}" x2="${left}" y2="${top+plotH}" stroke="#756780" stroke-width="1.5"/><line x1="${left}" y1="${top+plotH}" x2="${w-right}" y2="${top+plotH}" stroke="#756780" stroke-width="1.5"/>`;
+ freq.forEach((f,i)=>{let bh=f/max*plotH,x=left+i*barW+1,y=top+plotH-bh;let color=i===highlight?'#ffb34f':(i%2?'#9daeff':'#f48ab8');s+=`<rect x="${x}" y="${y}" width="${barW-2}" height="${bh}" rx="2" fill="${color}" stroke="#fff" stroke-width="1"><title>ช่วง ${d.bins[i]} ความถี่ ${f}</title></rect><text x="${x+(barW-2)/2}" y="${y-6}" text-anchor="middle" font-size="12" font-weight="bold" fill="#51435f">${f}</text><text x="${x+(barW-2)/2}" y="${top+plotH+18}" text-anchor="middle" font-size="${freq.length>5?10:12}" fill="#655873">${d.bins[i]}</text>`});
+ s+=`<text x="${left+plotW/2}" y="${h-8}" text-anchor="middle" font-size="12" fill="#655873">ช่วง${d.name} (${d.unit})</text><text x="13" y="${top+plotH/2}" transform="rotate(-90 13 ${top+plotH/2})" text-anchor="middle" font-size="12" fill="#655873">ความถี่</text>`;
+ svg.innerHTML=s;
+ $('chartCaption').textContent=`ชุดข้อมูล: ${d.name} • ความถี่รวม ${freq.reduce((a,b)=>a+b,0)} • ลองสังเกตความสูงของแท่งและช่วงข้อมูล`;
+}
+function shuffle(a){return a.sort(()=>Math.random()-.5)}
+function choose(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function makeQuestions(){
+ let d=binData(),diff=$('difficulty').value,mission=$('mission').value,qs=[];
+ let count=Number($('questionCount').value);
+ if(mission==='myExercises'){
+   if(!customExerciseBank.length) throw new Error('กรุณาสร้างแบบฝึกหัดอย่างน้อย 1 ข้อก่อนเริ่มเกม');
+   return Array.from({length:count},(_,i)=>({...customExerciseBank[i%customExerciseBank.length],type:'custom'}));
+ }
+ for(let n=0;n<count;n++){
+  let type=mission==='mix'?choose(['read','build','analyze']):mission;
+  let i=Math.floor(Math.random()*d.freq.length),max=Math.max(...d.freq),sum=d.freq.reduce((a,b)=>a+b,0);
+  let q,opts,ans,explain;
+  if(type==='read'){
+   let kind=choose(['freq','max','sum','min']);
+   if(kind==='freq'){q=`ช่วง ${d.bins[i]} มีข้อมูลทั้งหมดกี่${d.unit==='เล่ม'?'รายการ':'คน'}?`;ans=String(d.freq[i]);opts=makeOptions(ans,d.freq, diff);explain=`ช่วง ${d.bins[i]} มีความถี่ ${d.freq[i]} จึงมีข้อมูล ${d.freq[i]} รายการ`}
+   else if(kind==='max'){let ix=d.freq.indexOf(max);q='ช่วงใดมีความถี่มากที่สุด?';ans=d.bins[ix];opts=shuffle([ans,...d.bins.filter(x=>x!==ans).slice(0,3)]);explain=`ช่วง ${ans} มีความถี่สูงสุด ${max}`}
+   else if(kind==='sum'){q='ข้อมูลทั้งหมดมีจำนวนเท่าใด (ความถี่รวม)?';ans=String(sum);opts=makeOptions(ans,[sum,sum-2,sum+3,Math.max(1,sum-5)],diff);explain=`นำความถี่ทุกช่วงมาบวกกัน ได้ ${sum}`}
+   else {let mn=Math.min(...d.freq),ix=d.freq.indexOf(mn);q='ช่วงใดมีความถี่น้อยที่สุด?';ans=d.bins[ix];opts=shuffle([ans,...d.bins.filter(x=>x!==ans).slice(0,3)]);explain=`ช่วง ${ans} มีความถี่ต่ำสุด ${mn}`}
+  } else if(type==='build'){
+   let f=d.freq[i];q=`ถ้าต้องสร้างฮิสโทแกรม ช่วง ${d.bins[i]} ต้องวาดแท่งสูงเท่าใด?`;ans=String(f);opts=makeOptions(ans,d.freq,diff);explain=`ความสูงของแท่งเท่ากับความถี่ของช่วงนั้น คือ ${f}`
+  } else {
+   let ix=d.freq.indexOf(max),mean=d.freq.reduce((a,b)=>a+b,0)/d.freq.length;
+   let kind=choose(['mode','compare','continuous']);
+   if(kind==='mode'){q='จากกราฟ ช่วงใดเป็นช่วงฐานนิยม (มีความถี่สูงสุด)?';ans=d.bins[ix];opts=shuffle([ans,...d.bins.filter(x=>x!==ans).slice(0,3)]);explain=`ฐานนิยมของข้อมูลแบบจัดช่วงคือช่วงที่มีความถี่สูงสุด ได้แก่ ${ans}`}
+   else if(kind==='compare'){let j=(i+1)%d.freq.length;q=`ช่วง ${d.bins[i]} มีข้อมูลมากกว่าช่วง ${d.bins[j]} หรือไม่?`;ans=d.freq[i]>d.freq[j]?'มากกว่า':d.freq[i]===d.freq[j]?'เท่ากัน':'น้อยกว่า';opts=shuffle(['มากกว่า','น้อยกว่า','เท่ากัน','สรุปไม่ได้']);explain=`ความถี่ ${d.bins[i]} = ${d.freq[i]} และ ${d.bins[j]} = ${d.freq[j]} จึงตอบ “${ans}”`}
+   else {q='เหตุใดแท่งของฮิสโทแกรมจึงวางชิดติดกัน?';ans='ช่วงข้อมูลต่อเนื่องกัน';opts=shuffle([ans,'เพื่อให้กราฟดูสวย','เพราะความถี่ต้องเท่ากัน','เพราะไม่มีแกนนอน']);explain='แท่งชิดกันเพื่อสื่อว่าช่วงชั้นของข้อมูลเชิงปริมาณต่อเนื่องกัน'}
+  }
+  qs.push({type,q,opts,ans,explain});
+ }
+ return qs;
+}
+function makeOptions(ans,base,diff){let n=diff==='easy'?2:diff==='medium'?3:4;let candidates=[String(ans),...base.map(String),String(Number(ans)+2),String(Math.max(0,Number(ans)-1)),String(Number(ans)+4),String(Number(ans)+1)];let unique=[...new Set(candidates)].filter(x=>x!==String(ans));return shuffle([String(ans),...shuffle(unique).slice(0,n-1)])}
+function renderQuestion(){
+ clearInterval(state.interval);state.locked=false;state.usedHint=false;state.remaining=Number($('timeLimit').value);state.time=state.remaining;
+ if(state.index>=state.total||state.lives<=0){finish();return}
+ let q=state.current=state.questions[state.index];$('missionTitle').textContent=({read:'👀 อ่านกราฟ',build:'🧱 สร้างฮิสโทแกรม',analyze:'🧠 วิเคราะห์ข้อมูล',custom:'✍️ แบบฝึกหัดของฉัน'})[q.type]||'🎯 ภารกิจฮิสโทแกรม';$('questionNo').textContent=`ข้อ ${state.index+1} / ${state.total}`;$('progressBar').style.width=(state.index/state.total*100)+'%';$('question').textContent=q.q;$('answers').innerHTML='';
+ q.opts.forEach((op,i)=>{let b=document.createElement('button');b.className='answer';b.dataset.answer=String(op);b.textContent=String.fromCharCode(65+i)+'. '+op;b.onclick=()=>answer(op,b);$('answers').appendChild(b)});
+ $('nextBtn').disabled=true;$('hintBtn').disabled=state.hints<=0;$('hintRemain').textContent=state.hints;$('feedback').textContent='เลือกคำตอบที่ถูกต้องให้ทันเวลาก่อนหมด!';$('timer').textContent=state.remaining;drawChart();state.interval=setInterval(()=>{state.remaining--; $('timer').textContent=state.remaining;if(state.remaining<=0){clearInterval(state.interval);if(!state.locked){state.locked=true;state.lives--;state.wrong++;state.answered++;state.combo=0;updateStats();disableAnswers();$('feedback').textContent='⏰ หมดเวลา! เฉลย: '+q.ans+'. '+q.explain;$('nextBtn').disabled=false;}}},1000);
+}
+function answer(op,btn){if(state.locked)return;state.locked=true;clearInterval(state.interval);state.answered++;let ok=String(op)===String(state.current.ans);if(ok){state.correct++;state.combo++;let bonus=$('comboPower').value==='on'&&state.combo>=3?5:0;state.score+=10+bonus;btn.classList.add('correct');$('feedback').textContent='🎉 ถูกต้อง! '+state.current.explain+(bonus?` 🔥 คอมโบ! โบนัส +${bonus} คะแนน`: '');}else{state.wrong++;state.lives--;state.combo=0;btn.classList.add('wrong');$('feedback').textContent='ยังไม่ถูกนะ 💗 คำตอบคือ “'+state.current.ans+'” — '+state.current.explain;}
+ [...$('answers').children].forEach(b=>{b.disabled=true;if(b.dataset.answer===String(state.current.ans))b.classList.add('correct')});updateStats();$('nextBtn').disabled=false;$('progressBar').style.width=((state.index+1)/state.total*100)+'%';if(state.lives<=0)$('nextBtn').textContent='ดูผลลัพธ์ 🏆';}
+function disableAnswers(){[...$('answers').children].forEach(b=>b.disabled=true);$('nextBtn').disabled=false}
+function updateStats(){$('score').textContent=state.score;$('heartStat').textContent='❤️'.repeat(Math.max(0,state.lives))||'หมดแล้ว';$('combo').textContent=state.combo;$('hintRemain').textContent=state.hints;$('hintBtn').disabled=state.hints<=0}
+function finish(){clearInterval(state.interval);$('progressBar').style.width=(state.lives<=0 && state.index<state.total ? (state.index/state.total*100) : 100)+'%';$('questionNo').textContent=`ทำไปแล้ว ${state.answered} / ${state.total} ข้อ`;$('missionTitle').textContent=state.lives<=0 && state.index<state.total?'💀 GAME OVER — หัวใจหมดแล้ว!':(state.lives>0?'🏆 ภารกิจสำเร็จ!':'💫 หมดพลังแล้ว');$('question').textContent=`คุณได้ ${state.score} คะแนน จากการตอบถูก ${state.correct} ข้อ`; $('answers').innerHTML='';$('nextBtn').disabled=true;$('hintBtn').disabled=true;$('cutBtn').disabled=true;$('extraBtn').disabled=true;$('result').classList.remove('hidden');let pct=state.answered?Math.round(state.correct/state.answered*100):0;let gameOver=state.lives<=0 && state.index<state.total;let title=gameOver?'💀 GAME OVER':(pct>=90?'🌟 ปรมาจารย์ฮิสโทแกรม':pct>=70?'🥇 นักวิเคราะห์มือฉมัง':pct>=50?'🥈 นักสำรวจกราฟ':'🌱 ผู้ฝึกฝนคนเก่ง');let fullScore=state.total*10+( $('comboPower').value==='on' ? Math.max(0,state.total-2)*5 : 0);let scoreLine=`คะแนนที่ได้ ${state.score} / ${fullScore} คะแนน`;let lesson=`<div class="lesson-summary"><h3>📘 สรุปบทเรียน: ฮิสโทแกรม</h3><ul><li><b>ฮิสโทแกรม</b> ใช้แสดงการแจกแจงความถี่ของข้อมูลเชิงปริมาณที่แบ่งเป็นช่วง</li><li><b>แกนนอน (X)</b> แสดงช่วงชั้นของข้อมูล เช่น 10–19, 20–29</li><li><b>แกนตั้ง (Y)</b> แสดงความถี่ หรือจำนวนข้อมูลในแต่ละช่วง</li><li><b>ความสูงของแท่ง</b> บอกความถี่ของช่วงนั้น แท่งสูงกว่าแปลว่ามีข้อมูลอยู่ในช่วงนั้นมากกว่า</li><li><b>แท่งกราฟติดกัน</b> เพราะช่วงข้อมูลเป็นช่วงต่อเนื่อง ไม่เว้นช่องเหมือนแผนภูมิแท่งทั่วไป</li><li><b>ความถี่รวม</b> หาได้จากการบวกความถี่ของทุกช่วงเข้าด้วยกัน</li></ul><p><b>วิธีอ่านกราฟง่าย ๆ:</b> ดูชื่อกราฟ → อ่านช่วงบนแกนนอน → ดูความถี่บนแกนตั้ง → เปรียบเทียบแท่งที่สูงที่สุดและต่ำที่สุด</p></div>`;$('result').innerHTML=`<h2>${title}</h2>${gameOver?'<p><strong>หัวใจหมดแล้ว! คุณทำข้อสอบไม่ครบทุกข้อ</strong></p>':'<p>🎉 ภารกิจสิ้นสุดแล้ว!</p>'}<p class="final-score">${scoreLine}</p><p>ทำไปแล้ว ${state.answered} จาก ${state.total} ข้อ • ความแม่นยำ ${pct}% • ตอบถูก ${state.correct} • ตอบผิด/หมดเวลา ${state.wrong}</p><p>${gameOver?'ลองทบทวนบทเรียน แล้วเริ่มภารกิจใหม่อีกครั้งนะ':(pct>=70?'ยอดเยี่ยม! ลองเพิ่มระดับความยากเพื่อท้าทายตัวเอง':'ลองอ่านสรุปบทเรียนด้านล่าง แล้วเล่นอีกครั้งนะ')}</p>${lesson}<button class="btn" onclick="startGame()">เล่นอีกครั้ง 🔁</button>`;$('badges').innerHTML=`<span class="badge">🏅 ${title}</span><span class="badge">⭐ ${state.score} คะแนน</span>${state.combo>=3?'<span class="badge">🔥 คอมโบไฟลุก</span>':''}`;drawChart()}
+function startGame(){
+ clearInterval(state.interval);
+ try{
+  if($('dataset').value==='custom')customDataset=parseCustomDataset();
+  state.questions=makeQuestions();
+ }catch(e){$('feedback').textContent='⚠️ '+e.message;return}
+ document.body.classList.add('game-active');
+ state.score=0;state.lives=Number($('lives').value);state.combo=0;state.index=0;state.total=Number($('questionCount').value);state.hints=Number($('hintPower').value);state.correct=0;state.wrong=0;state.answered=0;
+ $('result').classList.add('hidden');$('cutBtn').disabled=false;$('extraBtn').disabled=false;$('hintBtn').disabled=false;$('nextBtn').textContent='ข้อต่อไป ➜';updateStats();renderQuestion()
+}
+$('startBtn').onclick=startGame;$('nextBtn').onclick=()=>{if(!state.locked)return;state.index++;if(state.index>=state.total||state.lives<=0)finish();else renderQuestion()};
+$('hintBtn').onclick=()=>{if(state.hints<=0||state.locked)return;state.hints--;state.usedHint=true;updateStats();let q=state.current;$('feedback').textContent='💡 คำใบ้: '+q.explain;};
+$('cutBtn').onclick=()=>{if(state.locked)return;let wrong=[...$('answers').children].filter(b=>b.dataset.answer!==String(state.current.ans));shuffle(wrong).slice(0,Math.max(1,Math.floor(wrong.length/2))).forEach(b=>{b.disabled=true;b.style.opacity='.35';b.textContent+=' ✖'});$('feedback').textContent='✂️ ตัดตัวเลือกที่ไม่น่าใช้ออกแล้ว ลองคิดอีกครั้ง!'};
+$('extraBtn').onclick=()=>{if(state.locked)return;state.remaining+=10;$('timer').textContent=state.remaining;$('feedback').textContent='⏳ เพิ่มเวลาให้อีก 10 วินาทีแล้ว!'};
+$('questionCount').oninput=()=>{$('countVal').textContent=$('questionCount').value+' ข้อ'};$('timeLimit').oninput=()=>{$('timeVal').textContent=$('timeLimit').value+' วินาที'};$('lives').oninput=()=>{$('lifeVal').textContent=$('lives').value+' ดวง'};$('hintPower').oninput=()=>{$('hintVal').textContent=$('hintPower').value+' ครั้ง'};
+
+function renderExerciseList(){
+ const box=$('exerciseList');
+ if(!customExerciseBank.length){box.innerHTML='<p class="muted">ยังไม่มีโจทย์ที่สร้างเอง</p>';return}
+ box.innerHTML='';
+ customExerciseBank.forEach((q,i)=>{
+  const item=document.createElement('div');item.className='saved-exercise';
+  const title=document.createElement('strong');title.textContent=`${i+1}. ${q.q}`;item.appendChild(title);
+  const p=document.createElement('p');p.className='muted';p.textContent='ตัวเลือก: '+q.opts.join(' • ');item.appendChild(p);
+  const remove=document.createElement('button');remove.className='btn soft';remove.textContent='ลบข้อนี้';remove.onclick=()=>{customExerciseBank.splice(i,1);renderExerciseList()};item.appendChild(remove);
+  box.appendChild(item);
+ });
+}
+$('mission').onchange=()=>{$('exercisePanel').classList.toggle('hidden',$('mission').value!=='myExercises')};
+$('addExerciseBtn').onclick=()=>{
+ const q=$('exQuestion').value.trim();
+ const opts=[$('exA').value.trim(),$('exB').value.trim(),$('exC').value.trim(),$('exD').value.trim()];
+ const correctIndex=Number($('exCorrect').value);
+ if(!q||opts.some(x=>!x)){ $('feedback').textContent='⚠️ กรุณากรอกคำถามและตัวเลือกให้ครบทั้ง 4 ตัวเลือก'; return; }
+ if(new Set(opts.map(x=>x.toLowerCase())).size<4){$('feedback').textContent='⚠️ ตัวเลือกทั้ง 4 ข้อต้องไม่ซ้ำกัน';return;}
+ customExerciseBank.push({q,opts,ans:opts[correctIndex],explain:$('exExplain').value.trim()||'ทบทวนเหตุผลจากโจทย์และตัวเลือกอีกครั้ง'});
+ renderExerciseList();
+ $('exQuestion').value='';['exA','exB','exC','exD'].forEach(id=>$(id).value='');$('exExplain').value='';
+ $('feedback').textContent=`✅ เพิ่มแบบฝึกหัดแล้ว ตอนนี้มี ${customExerciseBank.length} ข้อ`;
+};
+$('clearExercisesBtn').onclick=()=>{customExerciseBank=[];renderExerciseList();$('feedback').textContent='ล้างแบบฝึกหัดที่สร้างเองทั้งหมดแล้ว'};
+renderExerciseList();
+
+$('dataset').onchange=()=>{
+ const isCustom=$('dataset').value==='custom';
+ $('customPanel').classList.toggle('hidden',!isCustom);
+ try{if(isCustom)customDataset=parseCustomDataset();drawChart()}catch(e){$('chartCaption').textContent=e.message}
+};
+$('customBins').oninput=()=>{$('customBinsVal').textContent=$('customBins').value};
+$('applyCustomBtn').onclick=()=>{
+ try{customDataset=parseCustomDataset();drawChart();$('feedback').textContent='✅ สร้างฮิสโทแกรมจากข้อมูลของคุณแล้ว กด “เริ่มภารกิจใหม่” เพื่อเล่นด้วยชุดข้อมูลนี้';}
+ catch(e){$('feedback').textContent='⚠️ '+e.message}
+};
+['customValues','customName','customUnit'].forEach(id=>$(id).addEventListener('change',()=>{
+ if($('dataset').value==='custom'){try{customDataset=parseCustomDataset();drawChart()}catch(e){$('chartCaption').textContent=e.message}}
+}));
+$('difficulty').onchange=()=>drawChart();
+$('resetBtn').onclick=()=>{clearInterval(state.interval);$('difficulty').value='medium';$('questionCount').value=10;$('timeLimit').value=30;$('lives').value=5;$('dataset').value='scores';$('customPanel').classList.add('hidden');$('customName').value='ข้อมูลของฉัน';$('customUnit').value='หน่วย';$('customValues').value='12, 15, 18, 18, 22, 25, 27, 31, 33, 35, 36, 40, 42, 44, 48';$('customBins').value=5;$('customBinsVal').textContent='5';customDataset=null;$('mission').value='mix';$('exercisePanel').classList.add('hidden');$('hintPower').value=3;$('comboPower').value='on';$('countVal').textContent='10 ข้อ';$('timeVal').textContent='30 วินาที';$('lifeVal').textContent='5 ดวง';$('hintVal').textContent='3 ครั้ง';startGame()};
+drawChart();
+
+// Reliability and teacher tools enhancement
+const postTestBank = [
+ {q:'ฮิสโทแกรมใช้แสดงข้อมูลลักษณะใดเป็นหลัก?',opts:['ข้อมูลเชิงปริมาณที่จัดเป็นช่วง','ชื่อของนักเรียน','ข้อมูลที่ไม่มีจำนวน','ข้อความบรรยายเท่านั้น'],ans:0,why:'ฮิสโทแกรมแสดงการแจกแจงความถี่ของข้อมูลเชิงปริมาณที่จัดเป็นช่วง'},
+ {q:'แกนนอนของฮิสโทแกรมโดยทั่วไปแสดงอะไร?',opts:['ความถี่','ช่วงชั้นของข้อมูล','คะแนนรวมเท่านั้น','จำนวนคำตอบถูก'],ans:1,why:'แกนนอนแสดงช่วงชั้นหรือช่วงค่าของข้อมูล'},
+ {q:'แกนตั้งมักแสดงค่าใด?',opts:['ชื่อข้อมูล','ช่วงชั้น','ความถี่','ชื่อกราฟ'],ans:2,why:'แกนตั้งแสดงความถี่ในแต่ละช่วง'},
+ {q:'แท่งของฮิสโทแกรมมักวางอย่างไร?',opts:['เว้นช่องกว้างเสมอ','วางชิดกัน','วางเป็นวงกลม','ไม่ต้องมีแท่ง'],ans:1,why:'แท่งชิดกันเพื่อสื่อถึงช่วงข้อมูลเชิงปริมาณที่ต่อเนื่องกัน'},
+ {q:'ความถี่ของช่วงหนึ่งหมายถึงอะไร?',opts:['จำนวนข้อมูลในช่วงนั้น','ความกว้างหน้ากระดาษ','จำนวนช่วงทั้งหมด','ค่าที่มากที่สุดของข้อมูล'],ans:0,why:'ความถี่คือจำนวนข้อมูลที่อยู่ในช่วงชั้นนั้น'},
+ {q:'ถ้าความถี่ของ 3 ช่วงคือ 2, 5 และ 4 ความถี่รวมเท่าใด?',opts:['9','10','11','12'],ans:2,why:'นำความถี่มาบวกกัน 2 + 5 + 4 = 11'},
+ {q:'แท่งที่สูงที่สุดบอกอะไร?',opts:['ช่วงที่มีข้อมูลมากที่สุด','ช่วงที่ไม่มีข้อมูล','ข้อมูลมีค่าเท่ากันทั้งหมด','จำนวนช่วงชั้น'],ans:0,why:'แท่งสูงที่สุดแทนช่วงที่มีความถี่สูงที่สุด'},
+ {q:'ก่อนสร้างฮิสโทแกรมจากชุดข้อมูล ควรทำสิ่งใด?',opts:['สุ่มความถี่','จัดข้อมูลเป็นช่วงชั้น','ลบข้อมูลทั้งหมด','ไม่ต้องนับข้อมูล'],ans:1,why:'ควรกำหนดช่วงชั้นและนับความถี่ในแต่ละช่วง'},
+ {q:'ถ้าช่วง A มีความถี่ 7 และช่วง B มีความถี่ 3 ข้อใดถูกต้อง?',opts:['A มีข้อมูลน้อยกว่า B','A มีข้อมูลมากกว่า B','A และ B เท่ากัน','สรุปไม่ได้จากความถี่'],ans:1,why:'7 มากกว่า 3 ดังนั้นช่วง A มีข้อมูลมากกว่า B'},
+ {q:'สิ่งใดช่วยให้ฮิสโทแกรมอ่านง่ายและถูกต้อง?',opts:['ไม่มีชื่อแกน','ไม่แสดงช่วงชั้น','ระบุช่วงชั้นและสเกลความถี่ชัดเจน','ใช้ความถี่ไม่ตรงข้อมูล'],ans:2,why:'ชื่อแกน ช่วงชั้น และสเกลที่ชัดเจนช่วยให้ตีความกราฟถูกต้อง'}
+];
+function renderPostTest(){
+ const root=document.getElementById('postTestQuestions'); if(!root)return;
+ root.innerHTML='';
+ postTestBank.forEach((q,i)=>{
+  const wrap=document.createElement('div');wrap.className='saved-exercise';
+  const title=document.createElement('strong');title.textContent=(i+1)+'. '+q.q;wrap.appendChild(title);
+  q.opts.forEach((op,j)=>{
+   const label=document.createElement('label');label.style.cssText='display:flex;align-items:flex-start;gap:8px;margin:7px 0;font-weight:normal';
+   const input=document.createElement('input');input.type='radio';input.name='posttest_'+i;input.value=String(j);
+   label.appendChild(input);const text=document.createElement('span');text.textContent=String.fromCharCode(65+j)+'. '+op;label.appendChild(text);wrap.appendChild(label);
+  });
+  const explain=document.createElement('div');explain.id='postExplain_'+i;explain.className='muted hidden';explain.style.marginTop='8px';wrap.appendChild(explain);root.appendChild(wrap);
+ });
+}
+function gradePostTest(){
+ let score=0,missing=0;
+ postTestBank.forEach((q,i)=>{
+  const chosen=document.querySelector('input[name="posttest_'+i+'"]:checked');
+  const ex=document.getElementById('postExplain_'+i);
+  if(!chosen)missing++;else if(Number(chosen.value)===q.ans)score++;
+  ex.classList.remove('hidden');ex.textContent='เฉลย: '+String.fromCharCode(65+q.ans)+'. '+q.opts[q.ans]+' — '+q.why;
+ });
+ document.getElementById('postTestResult').textContent=`คะแนน ${score}/10 (${score*10}%)${missing?` • ยังไม่ได้ตอบ ${missing} ข้อ`:''} • ${score>=8?'ยอดเยี่ยม!':score>=6?'ผ่านเกณฑ์เบื้องต้น ลองทบทวนข้อที่ผิด':'แนะนำให้ทบทวนเรื่องช่วงชั้นและความถี่ แล้วลองใหม่'}`;
+}
+function resetPostTest(){renderPostTest();document.getElementById('postTestResult').textContent='เลือกคำตอบให้ครบ แล้วกด “ตรวจคำตอบ” เพื่อดูคะแนนและเฉลย';}
+function exportGameData(){
+ const payload={format:'HistogramQuestDataV1',dataset:{name:document.getElementById('customName').value,unit:document.getElementById('customUnit').value,values:document.getElementById('customValues').value,bins:document.getElementById('customBins').value},exercises:customExerciseBank};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='histogram_quest_data.json';a.click();URL.revokeObjectURL(url);
+ document.getElementById('feedback').textContent='💾 ส่งออกชุดข้อมูลและแบบฝึกหัดเป็นไฟล์ JSON แล้ว';
+}
+function importGameData(file){
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const data=JSON.parse(reader.result);
+   if(data.format!=='HistogramQuestDataV1')throw new Error('รูปแบบไฟล์ไม่ถูกต้อง');
+   if(data.dataset){document.getElementById('customName').value=data.dataset.name||'ข้อมูลของฉัน';document.getElementById('customUnit').value=data.dataset.unit||'หน่วย';document.getElementById('customValues').value=data.dataset.values||'';document.getElementById('customBins').value=Number(data.dataset.bins)||5;document.getElementById('customBinsVal').textContent=document.getElementById('customBins').value;customDataset=null;}
+   if(Array.isArray(data.exercises)){customExerciseBank=data.exercises.filter(q=>q&&typeof q.q==='string'&&Array.isArray(q.opts)&&q.opts.length===4&&q.opts.includes(q.ans));renderExerciseList();}
+   document.getElementById('feedback').textContent='📂 นำเข้าชุดข้อมูลและแบบฝึกหัดเรียบร้อยแล้ว';
+  }catch(e){document.getElementById('feedback').textContent='⚠️ นำเข้าไม่สำเร็จ: '+e.message;}
+ };
+ reader.readAsText(file);
+}
+document.addEventListener('DOMContentLoaded',()=>{
+ renderPostTest();
+ document.getElementById('gradeTestBtn')?.addEventListener('click',gradePostTest);
+ document.getElementById('resetTestBtn')?.addEventListener('click',resetPostTest);
+ document.getElementById('exportDataBtn')?.addEventListener('click',exportGameData);
+ document.getElementById('importDataBtn')?.addEventListener('click',()=>document.getElementById('importDataFile').click());
+ document.getElementById('importDataFile')?.addEventListener('change',e=>{if(e.target.files&&e.target.files[0])importGameData(e.target.files[0]);e.target.value='';});
+});
+
+</script>
+
+<script>
+/* Page navigation enhancements */
+(function(){
+  const $ = id => document.getElementById(id);
+  const returnToSetup = () => {
+    clearInterval(state.interval);
+    document.body.classList.remove('game-active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  // Reset means return to the first screen and restore default settings.
+  $('resetBtn').onclick = () => {
+    clearInterval(state.interval);
+    document.body.classList.remove('game-active');
+    $('difficulty').value='medium';
+    $('questionCount').value=10;
+    $('timeLimit').value=30;
+    $('lives').value=5;
+    $('dataset').value='scores';
+    $('customPanel').classList.add('hidden');
+    $('customName').value='ข้อมูลของฉัน';
+    $('customUnit').value='หน่วย';
+    $('customValues').value='12, 15, 18, 18, 22, 25, 27, 31, 33, 35, 36, 40, 42, 44, 48';
+    $('customBins').value=5;
+    $('customBinsVal').textContent='5';
+    customDataset=null;
+    $('mission').value='mix';
+    $('exercisePanel').classList.add('hidden');
+    $('hintPower').value=3;
+    $('comboPower').value='on';
+    $('countVal').textContent='10 ข้อ';
+    $('timeVal').textContent='30 วินาที';
+    $('lifeVal').textContent='5 ดวง';
+    $('hintVal').textContent='3 ครั้ง';
+    $('score').textContent='0';
+    $('heartStat').textContent='❤️❤️❤️❤️❤️';
+    $('combo').textContent='0';
+    $('timer').textContent='30';
+    $('missionTitle').textContent='🌷 พร้อมออกเดินทางหรือยัง?';
+    $('questionNo').textContent='ข้อ 0 / 10';
+    $('progressBar').style.width='0%';
+    $('question').textContent='🎯 เป้าหมาย: ฝึกสร้าง อ่าน และวิเคราะห์ฮิสโทแกรมให้แม่นยำ!';
+    $('answers').innerHTML='';
+    $('feedback').textContent='เลือกชุดข้อมูล แล้วกด “เริ่มภารกิจใหม่” เพื่อเริ่มเรียนรู้';
+    $('result').classList.add('hidden');
+    $('nextBtn').textContent='ข้อต่อไป ➜';
+    drawChart();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  // At game end, offer a clear way to return to setup as well as replay.
+  const originalFinish = finish;
+  finish = function(){
+    originalFinish();
+    const result = $('result');
+    if(result && !result.querySelector('[data-back-setup]')){
+      const back = document.createElement('button');
+      back.className='btn soft';
+      back.dataset.backSetup='true';
+      back.textContent='กลับไปตั้งค่าเกม ⚙️';
+      back.style.marginLeft='8px';
+      back.onclick=returnToSetup;
+      result.appendChild(back);
+    }
+  };
+})();
+</script>
+
+
+<script>
+/* Sound feedback: cheerful applause for correct answers, short buzzer/cross for wrong answers */
+(function(){
+  let audioCtx = null;
+  function context(){
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return null;
+    if(!audioCtx) audioCtx = new AC();
+    if(audioCtx.state === 'suspended') audioCtx.resume().catch(()=>{});
+    return audioCtx;
+  }
+  function tone(freq, start, duration, type, volume, endFreq){
+    const ctx=context(); if(!ctx) return;
+    const osc=ctx.createOscillator(), gain=ctx.createGain();
+    osc.type=type || 'sine';
+    osc.frequency.setValueAtTime(freq,ctx.currentTime+start);
+    if(endFreq) osc.frequency.exponentialRampToValueAtTime(Math.max(1,endFreq),ctx.currentTime+start+duration);
+    gain.gain.setValueAtTime(0.0001,ctx.currentTime+start);
+    gain.gain.exponentialRampToValueAtTime(volume,ctx.currentTime+start+0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+start+duration);
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.start(ctx.currentTime+start);osc.stop(ctx.currentTime+start+duration+0.03);
+  }
+  // A brief applause-like burst made from many soft, high-frequency noise-like taps.
+  function clapBurst(start, duration){
+    const ctx=context(); if(!ctx) return;
+    const count=7;
+    for(let i=0;i<count;i++){
+      const t=start+i*(duration/count);
+      const length=0.045+Math.random()*0.035;
+      const size=Math.max(1,Math.floor(ctx.sampleRate*length));
+      const buffer=ctx.createBuffer(1,size,ctx.sampleRate);
+      const data=buffer.getChannelData(0);
+      for(let j=0;j<size;j++){
+        const fade=1-j/size;
+        data[j]=(Math.random()*2-1)*fade;
+      }
+      const source=ctx.createBufferSource(), filter=ctx.createBiquadFilter(), gain=ctx.createGain();
+      source.buffer=buffer;
+      filter.type='highpass';filter.frequency.value=850;
+      gain.gain.setValueAtTime(0.0001,ctx.currentTime+t);
+      gain.gain.exponentialRampToValueAtTime(0.13+Math.random()*0.08,ctx.currentTime+t+0.004);
+      gain.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+t+length);
+      source.connect(filter);filter.connect(gain);gain.connect(ctx.destination);
+      source.start(ctx.currentTime+t);source.stop(ctx.currentTime+t+length);
+    }
+  }
+  function correctSound(){
+    context();
+    // Bright celebratory chime plus several clap bursts.
+    tone(660,0,0.13,'sine',0.10);
+    tone(880,0.12,0.18,'sine',0.11);
+    tone(1046,0.27,0.22,'sine',0.10);
+    clapBurst(0.04,0.34);
+  }
+  function wrongSound(){
+    context();
+    // Short descending buzzer to signal a wrong answer.
+    tone(260,0,0.22,'square',0.075,185);
+    tone(185,0.19,0.20,'square',0.065,125);
+  }
+  // Hook into the game's existing answer handler while preserving its scoring logic.
+  if(typeof answer === 'function'){
+    const gameAnswer = answer;
+    answer = function(op,btn){
+      const wasLocked = state.locked;
+      const isCorrect = !wasLocked && String(op) === String(state.current.ans);
+      const result = gameAnswer.apply(this,arguments);
+      if(!wasLocked){if(isCorrect)correctSound();else wrongSound();}
+      return result;
+    };
+  }
+  // If time runs out, play the same incorrect-answer sound once.
+  const gameRenderQuestion = renderQuestion;
+  renderQuestion = function(){
+    const prevWrong = state.wrong;
+    const result = gameRenderQuestion.apply(this,arguments);
+    clearInterval(window.__histogramTimeoutSound);
+    window.__histogramTimeoutSound = setInterval(()=>{
+      if(state.locked && state.remaining<=0 && state.wrong>prevWrong){
+        wrongSound(); clearInterval(window.__histogramTimeoutSound);
+      }
+    },150);
+    return result;
+  };
+})();
+</script>
+
+</body></html>
